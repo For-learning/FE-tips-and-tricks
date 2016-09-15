@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Text flashing</title>
+</head>
+<script type="text/javascript">
+window.onload = function() {
+    var sleep = 500;
+    var font = document.getElementById('font');
+    font.INTERVAL = setInterval(function() {
+        (typeof font.index) === 'undefined' ? font.index = 0: font.index++;
+        font.style.color = ['red', 'black'][font.index % 2];
+        if (font.index > 120) {
+            clearInterval(font.INTERVAL);
+            delete font.index;
+        }
+    }, sleep);
+};
+</script>
+
+<body>
+</body>
+<div>
+    <font id="font">Drive this line of text flashing.</font>
+</div>
+
+</html>
