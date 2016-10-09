@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Text flashing</title>
+</head>
+
+<body>
+</body>
+<div>
+    <font id="font">Drive this line of text flashing. test</font>
+</div>
+<script type="text/javascript">
+function fHl(o, flag, rndColor, url) {
+    var bgCor = fgCor = '';
+    bgCor = '#F0F';
+    fgCor = 'black';
+    var re = new RegExp(flag, 'i');
+    for (var i = 0; i < o.childNodes.length; i++) {
+        var o_ = o.childNodes[i];
+        var o_p = o_.parentNode;
+        // If only one element.
+        if (o_.nodeType == 1) {
+            fHl(o_, flag, rndColor, url);
+        // If there are many elements in this container.
+        } else if (o_.nodeType == 3) {
+            if (!(o_p.nodeName == 'A')) {
+                if (o_.data.search(re) == -1) continue;
+                var temp = fEleA(o_.data, flag);
+                o_p.replaceChild(temp, o_);
+            }
+        }
+    }
+    //------------------------------------------------ 
+    function fEleA(text, flag) {
+        var style = ' style="background-color:' + bgCor + ';color:' + fgCor + ';" '
+        var o = document.createElement('span');
+        var str = '';
+        var re = new RegExp('(' + flag + ')', 'gi');
+        if (url) {
+            str = text.replace(re, '<a href="' + url +
+                '$1"' + style + '>$1</a>');
+        } else {
+            str = text.replace(re, '<span ' + style + '>$1</span>');
+        }
+        o.innerHTML = str;
+        return o;
+    }
+}
+
+fHl(document.body, 'test');
+</script>
+
+</html>

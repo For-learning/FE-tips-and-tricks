@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Text flashing</title>
+</head>
+
+<body>
+</body>
+<div id="highlightNeed">
+    <div>ddd</div>
+</div>
+<div id="highlightNeed2">
+    The history of this project predates majority of the common web technologies and it has been a challenge to dedicate time and effort to keep it up to date. Everything used to be in one file and assign window variables...
+    <br> Horrors! SyntaxHighlighter is currently used and has been used in the past by Microsoft, Apache, Mozilla, Yahoo, Wordpress, Bug Labs, Freshbooks and many many other companies and blogs.
+    <div>
+        1Horrors! SyntaxHighlighter is currently used and has been used in the past by Microsoft, Apache, Mozilla, Yahoo, Wordpress, Bug Labs, Freshbooks and many many other companies and blogs.
+        <br><div>
+            2Horrors! SyntaxHighlighter is currently used and has been used in the past by Microsoft, Apache, Mozilla, Yahoo, Wordpress, Bug Labs, Freshbooks and many many other companies and blogs.
+            <br></div></div></div>
+<!-- javascript -->
+<script type="text/javascript">
+function hightlightWord(_element, _color, _wordsList, _url) {
+    for (var i = 0; i < _element.childNodes.length; i++) {
+
+        if (_element.childNodes[i].nodeType == 3) {
+            if(_element.childNodes[i].data == '')
+                continue;
+            console.log(_element.childNodes[i].data);
+        } else if (_element.childNodes[i].nodeType == 1) {
+            hightlightWord(_element.childNodes[i]);
+        }
+    }
+}
+// Swap text
+function swapFlag() {
+
+}
+var nodes = document.getElementById('highlightNeed');
+hightlightWord(nodes, '#ccc');
+</script>
+
+</html>

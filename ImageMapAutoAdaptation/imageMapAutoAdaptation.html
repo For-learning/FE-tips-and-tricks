@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Image Map Auto Adaptation</title>
+</head>
+<!-- style -->
+<style>
+.imgOrigin {}
+
+.imgChangeAspectRatio {
+    width: 80%;
+}
+
+area:hover {
+    cursor: pointer;
+}
+</style>
+
+<body>
+    <!-- This partial just for referance -->
+    <h2>Referance</h2>
+    <div>
+        <img id="imgOrigin" class="imgOrigin" src="seven_sins.jpg" alt="Referance">
+    </div>
+    <hr>
+    <h2>Certain</h2>
+    <div>
+        <img id="imgChangeAspectRatio" usemap="imgChangeAspectRatioMap" class="imgChangeAspectRatio" src="seven_sins.jpg" alt="">
+        <map id="imgChangeAspectRatioMap" name="imgChangeAspectRatioMap">
+        </map>
+    </div>
+</body>
+<!-- javascript -->
+<script type="text/javascript">
+window.onload = function() {
+    /**
+     * param: image name.
+     * param: shape of hotspot.
+     * param: array of numbers of coordiate by original image.
+     */
+    var imageMapAutoAdaptation = function(imageId, hotspotShape, coordiates) {
+        // Get original image dimension
+        var _img = document.getElementById(imageId);
+        var _imgMap = document.getElementById(imageId + 'Map');
+        var imgOrigin = new Image();
+        imgOrigin.src = _img.src;
+        // Get image zoomin percentage
+        var zoomPercentage = imgOrigin.width / _img.width;
+        // Set 'coord' values in the sitiation of original size.
+        // Drive oiginal size mutiply zoomin percentage then caculate out the current size needed.
+        var _area = document.createElement('area');
+        _area.shape = hotspotShape;
+        _area.coords = '';
+        for (var i = 0; i < coordiates.length; i++) {
+            if ((i + 1) == coordiates.length)
+                _area.coords += (coordiates[i] / zoomPercentage);
+            else
+                _area.coords += (coordiates[i] / zoomPercentage) + ",";
+        }
+        _area.alt = hotspotShape;
+        _area.href = 'http://www.baidu.com';
+        _imgMap.appendChild(_area);
+    };
+
+    imageMapAutoAdaptation('imgChangeAspectRatio', 'circle', [100, 100, 150]);
+
+
+    /**
+     * Thinking:
+     * 1. Get original image dimension.
+     * 2. Get image zoomin percentage.
+     * 3. Set 'coord' values in the sitiation of original size.
+     * 4. Drive oiginal size mutiply zoomin percentage then caculate out the current size needed.
+     */
+};
+</script>
+
+</html>
