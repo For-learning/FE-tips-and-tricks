@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Focus Carsuasel figure</title>
+    <style type="text/css">
+        a {
+            text-decoration: none;
+        }
+
+        #container {
+            width: 600px;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #container #imgList{
+            position: absolute;
+            width: 4200px;
+            height:400px;
+        }
+
+        #container .arrow {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: aqua;
+            text-align: center;
+            line-height: 30px;
+            font-size: 26px;
+            font-weight: 600;
+            position: absolute;
+            margin-top: -15px;
+            top:50%;
+        }
+        .arrow.arrow-left{
+            left: 20px;
+        }
+        .arrow.arrow-right{
+            right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="container">
+    <div id="imgList" style="left: -600px">
+        <img src="img/5.jpg" alt="1"/>
+        <img src="img/1.jpg" alt="1"/>
+        <img src="img/2.jpg" alt="2"/>
+        <img src="img/3.jpg" alt="3"/>
+        <img src="img/4.jpg" alt="4"/>
+        <img src="img/5.jpg" alt="5"/>
+        <img src="img/1.jpg" alt="5"/>
+    </div>
+    <div id="buttonList">
+
+    </div>
+    <a class="arrow arrow-left" href="javascript:void(0)" id="previous">&lt;</a>
+    <a class="arrow arrow-right" href="javascript:void(0)" id="next">&gt;</a>
+</div>
+<!-- javascript ################################################################################################### -->
+<script type="text/javascript">
+
+</script>
+</body>
+
+</html>
