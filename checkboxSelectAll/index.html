@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>How to select all of the checkbox</title>
+    <style>
+        .checkAll {
+            width: 100px;
+            height: 200px;
+            border: 1px dashed dimgray;
+        }
+    </style>
+</head>
+<body>
+<div class="checkAll">
+    <input id="checkAll" type="checkBox"/>Select All<br/>
+    <hr/>
+    <input name="items" type="checkBox"/>Basketball<br/>
+    <input name="items" type="checkBox"/>Football<br/>
+    <input name="items" type="checkBox"/>Billiard<br/>
+    <input name="items" type="checkBox"/>Swimming<br/>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        var selectAll = document.getElementById('checkAll');
+        var _items = document.getElementsByName('items');
+
+        // Set all of sub-checkbox to unselected status.
+        for (var i = 0; i < _items.length; i++) {
+            _items[i].checked = false;
+        }
+        // When we click the main checkbox
+        selectAll.onclick = function () {
+            // Get value of "selectAll" checkbox. true/false
+            var _flag = this.checked;
+            for (var i = 0; i < _items.length; i++) {
+                _items[i].checked = _flag;
+            }
+        };
+        // If the amount of selected checkbox equal to the amount of whole of checkbox, then drive main checkbox selected.
+        for (var i = 0; i < _items.length; i++) {
+            _items[i].onclick = function () {
+                var _checkedAmount = 0;
+                for (var i = 0; i < _items.length; i++) {
+                    if (_items[i].checked) {
+                        _checkedAmount++;
+                    }
+                }
+                selectAll.checked = _items.length == _checkedAmount;
+            };
+        }
+    };
+</script>
+</body>
+</html>
