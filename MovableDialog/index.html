@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Movable dialog</title>
+    <!-- ########################################################################### -->
+    <style type="text/css">
+        .dialog {
+            width: 500px;
+            border: 1px dashed blue;
+            box-sizing: border-box;
+            /* key code */
+            display: none;
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            z-index: 999999;
+        }
+
+        .dialog-title {
+            height: 48px;
+            padding-left: 20px;
+            line-height: 48px;
+            background-color: #ccc;
+            /* key code */
+            cursor: move;
+            position: relative;
+        }
+
+        .dialog-content {
+            min-height: 200px;
+            background-color: #fff;
+        }
+
+        .closeTag {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            margin-top: -10px;
+            text-align: center;
+            line-height: normal;
+        }
+
+        .ui-mask {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            opacity: 0.4;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 888888;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+<!-- movable window -->
+<div id="dialog" class="dialog">
+    <div class="dialog-title">
+        Movable Dialog
+        <div onclick="closeBtn()" class="closeTag">X</div>
+    </div>
+    <div class="dialog-content">Content</div>
+</div>
+<!-- mask -->
+<div class="ui-mask" id="mask" onselectstart="return false"></div>
+<button onclick="openBtn()">Click me to show movable dialog</button>
+<h1>The flow of thinking</h1>
+<p>Step 1. While mouse fall on the area of title and press, then calculate the coordiate of left corner and mark element
+    movable.</p>
+<p>Step 2. While element is moving, if the movable flag is true, then move. If not, then stay.</p>
+<p>Step 3. While release the mouse, then mark the state of element unmovable.</p>
+<h1>knowledge</h1>
+<p>1. <b>document.getElementById('dialog').offsetLeft / offsetTop</b> : Get the offset volume of element.</p>
+<p>2. <b>e.pageX / pageY</b> : Get the offset volume of mouse.</p>
+<p>3. <b>document.documentElement.clientWidth / clientHeight</b> : Get the visual area of current page.</p>
+<p><b>var e = e || window.event;</b> : This is just for IE browser. Cause IE will put the event into the
+    <b>window.event</b> Object instead of regard as one parameter bring in.</p>
+<!-- javascript -->
+<script type="text/javascript">
+    // Dirve dialog window move to center of visual area.
+    function autoCenter(element) {
+        element.style.display = 'block';
+        var bodyW = document.documentElement.clientWidth;
+        var bodyH = document.documentElement.clientHeight;
+
+        var eleW = element.offsetWidth;
+        var eleH = element.offsetHeight;
+
+        element.style.left = (bodyW - eleW) / 2 + 'px';
+        element.style.top = (bodyH - eleH) / 2 + 'px';
+    }
+    // Show mask layer
+    function maskScreen(element) {
+        element.style.width = document.documentElement.clientWidth + 'px';
+        element.style.Height = document.documentElement.clientHeight + 'px';
+        element.style.display = 'block';
+    }
+
+    var mouseOffsetX = 0;
+    var mouseOffsetY = 0;
+    var isDrag = false;
+    // Step 1
+    document.getElementById('dialog').addEventListener('mousedown', function (e) {
+        var e = e || window.event;
+        mouseOffsetX = e.pageX - document.getElementById('dialog').offsetLeft;
+        mouseOffsetY = e.pageY - document.getElementById('dialog').offsetTop;
+        isDrag = true;
+    });
+    // Step 2
+    document.onmousemove = function (e) {
+        var e = e || window.event;
+        var mouseX = e.pageX;
+        var mouseY = e.pageY;
+
+        var moveX = 0;
+        var moveY = 0;
+
+        if (isDrag) {
+            moveX = mouseX - mouseOffsetX;
+            moveY = mouseY - mouseOffsetY;
+
+            // area limitation
+            var pageWidth = document.documentElement.clientWidth;
+            var pageHeight = document.documentElement.clientHeight;
+            var dialogWidth = document.getElementById('dialog').offsetWidth;
+            var dialogHeigth = document.getElementById('dialog').offsetHeight;
+            var maxX = pageWidth - dialogWidth;
+            var maxY = pageHeight - dialogHeigth;
+            moveX = Math.min(maxX, Math.max(0, moveX));
+            moveY = Math.min(maxY, Math.max(0, moveY));
+            // area limitation
+            document.getElementById('dialog').style.left = moveX + 'px';
+            document.getElementById('dialog').style.top = moveY + 'px';
+        }
+    };
+    // Step 3
+    document.onmouseup = function () {
+        isDrag = false;
+    };
+
+    // Show movabel dialog effect
+    function openBtn() {
+        autoCenter(document.getElementById('dialog'));
+        maskScreen(document.getElementById('mask'));
+    }
+
+    function closeBtn() {
+        document.getElementById('dialog').style.display = 'none';
+        document.getElementById('mask').style.display = 'none';
+    }
+</script>
+</body>
+
+</html>
