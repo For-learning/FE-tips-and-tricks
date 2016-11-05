@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Accordion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            padding: 30px;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        /* Effect initialization */
+        .wrapper {
+            width: 938px;
+            height: 128px;
+            border: 1px solid #d3d3d3;
+        }
+
+        .wrapper li {
+            width: 156px;
+            height: 128px;
+            float: left;
+            overflow: hidden;
+        }
+
+        .wrapper li a {
+            display: block;
+            height: 128px;
+            width: 156px;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .wrapper img {
+            position: absolute;
+            bottom: 0;
+            right: -15px;
+            height: 72px;
+            width: 117px;
+        }
+
+        .wrapper .info {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 136px;
+            padding: 4px 10px;
+        }
+
+        .wrapper .info h3 {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .wrapper .info p {
+            color: #868686;
+            font-size: 12px;
+            height: 22px;
+            line-height: 22px;
+            width: 136px;
+            overflow: hidden;
+        }
+
+        .wrapper .info .price {
+            font-size: 14px;
+            font-style: italic;
+            color: #fa2a5a;
+            height: 35px;
+        }
+
+        .wrapper .line {
+            position: absolute;
+            right: 0;
+            width: 0;
+            height: 128px;
+            border: 1px dashed #cacaca;
+        }
+
+        .wrapper .mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 128px;
+            width: 156px;
+            opacity: 0;
+            background-color: #000;
+        }
+
+        .wrapper:hover .mask { /* mask key code */
+            opacity: 0.15;
+        }
+
+        /* Special effect */
+        .wrapper ul * {
+            transition: all linear 0.1s;
+        }
+
+        .wrapper li.big, li.big a {
+            width: 314px;
+        }
+
+        .wrapper li.big img {
+            width: 159px;
+            height: 120px;
+            right: 0;
+            bottom: 0;
+        }
+
+        .wrapper li.big .info {
+            width: 290px;
+        }
+
+        .wrapper li.big h3 {
+            font-size: 18px;
+        }
+
+        .wrapper li.big p {
+            font-size: 14px;
+            width: 166px;
+        }
+
+        .wrapper li.big p.price {
+            font-size: 16px;
+            padding-top: 7px;
+        }
+
+        .wrapper li.big a:hover .mask { /* mask key code */
+            opacity: 0;
+        }
+
+    </style>
+</head>
+<body>
+<h1 style="margin: 10px;">Accordion effect</h1>
+
+<div id="wrapper" class="wrapper">
+    <ul id="subject">
+        <li class="big">
+            <a href="">
+                <img src="1.jpg" alt="">
+                <div class="info">
+                    <h3 style="color:olive;">man's accessory</h3>
+                    <p>Just discounting one whole day</p>
+                    <p class="price"><strong>1</strong><i>brand</i></p>
+                </div>
+                <i class="line"></i>
+                <i class="mask"></i>
+            </a>
+        </li>
+        <li>
+            <a href="">
+                <img src="1.jpg" alt="">
+                <div class="info">
+                    <h3 style="color:olive;">man's accessory</h3>
+                    <p>Just discounting one whole day</p>
+                    <p class="price"><strong>1</strong><i>brand</i></p>
+                </div>
+                <i class="line"></i>
+                <i class="mask"></i>
+            </a>
+        </li>
+        <li>
+            <a href="">
+                <img src="1.jpg" alt="">
+                <div class="info">
+                    <h3 style="color:olive;">man's accessory</h3>
+                    <p>Just discounting one whole day</p>
+                    <p class="price"><strong>1</strong><i>brand</i></p>
+                </div>
+                <i class="line"></i>
+                <i class="mask"></i>
+            </a>
+        </li>
+        <li>
+            <a href="">
+                <img src="1.jpg" alt="">
+                <div class="info">
+                    <h3 style="color:olive;">man's accessory</h3>
+                    <p>Just discounting one whole day</p>
+                    <p class="price"><strong>1</strong><i>brand</i></p>
+                </div>
+                <i class="line"></i>
+                <i class="mask"></i>
+            </a>
+        </li>
+        <li>
+            <a href="">
+                <img src="1.jpg" alt="">
+                <div class="info">
+                    <h3 style="color:olive;">man's accessory</h3>
+                    <p>Just discounting one whole day</p>
+                    <p class="price"><strong>1</strong><i>brand</i></p>
+                </div>
+                <i class="line"></i>
+                <i class="mask"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+<h1>Thinking</h1>
+<p>-- <span style="background-color: yellow;">.wrapper ul * { transition: all linear 0.1s; }</span> : This code indicate
+    that all of elements under the .wrapper will apply transition effect.</p>
+<p>-- We should know the difference of event addEventListener & attachEvent</p>
+<p>-- There are different ways to bind a mouse event separate in IE browser and modern browser. So we need a common
+    approach to bing event in both of them. Please see the code below:
+</p>
+<textarea name="" id="" cols="80" rows="10" readonly="true">
+    function bind(el, evenType, callback) {
+        if (typeof el.addEventListener === 'function') {
+            el.addEventListener(el, evenType, callback, false)
+        } else if (typeof el.attachEvent === 'function') {
+            el.attachEvent('on' + evenType, callback)
+        }
+    }
+</textarea>
+<p>-- <span style="background-color: yellow;">var target = e.target || e.srcElement;</span> We can use the code above to
+    get the element from the mouse event.</p>
+
+<script type="text/javascript">
+    function bind(el, evenType, callback) {
+        if (typeof el.addEventListener === 'function') {
+            el.addEventListener(evenType, callback, false);
+        } else if (typeof el.attachEvent === 'function') {
+            el.attachEvent('on' + evenType, callback);
+        }
+    }
+    function mouseoverHandler(e) {
+        var target = e.target || e.srcElement;
+        var outer = document.getElementById('subject');
+        var list = outer.getElementsByTagName('li');
+
+        for (var i = 0; i < list.length; i++) {
+            list[i].className = '';
+        }
+        // This function will be sure that the certain LI element will get the 'big' class when our mouse fall into the child element of LI.
+        while (target.tagName != 'LI' || target.tagName == 'BODY') {
+            target = target.parentNode;
+        }
+        target.className = 'big';
+    }
+
+    function initList() {
+        var outer = document.getElementById('subject');
+        var list = outer.getElementsByTagName('li');
+        for (var i = 0; i < list.length; i++) {
+            bind(list[i], 'mouseover', mouseoverHandler);
+        }
+    }
+    initList();
+</script>
+</body>
+</html>
